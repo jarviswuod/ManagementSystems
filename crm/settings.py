@@ -72,6 +72,18 @@ WSGI_APPLICATION = 'crm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
+'''
+STEPS FOR DJANGO POSTGRESQL DATABASE + AWS RDS
+
+1. Download and install PostgreSQL and PG Admin
+2. Login to admin & Create Database
+3. Connect database on AWS
+4. Create database on AWS
+5. Connect to live AWS Database with PG admin and Django
+
+'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -124,14 +136,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # SMTP Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'jarvisochieng2018@gmail.com'
-EMAIL_HOST_PASSWORD = '21281013'
+EMAIL_HOST_USER = "jarvisochieng2018@gmail.com"
+EMAIL_HOST_PASSWORD = 'afpbtlappndgmnej'
 
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
