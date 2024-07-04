@@ -2,17 +2,12 @@ from django.db import models
 
 
 class User(models.Model):
-    USER_TYPES = [
-        ('Admin', 'Admin'),
-        ('Player', 'Player'),
-    ]
-
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
     phone = models.CharField(max_length=255, null=True)
-    user_type = models.CharField(max_length=7, choices=USER_TYPES)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
@@ -60,9 +55,9 @@ class Season(models.Model):
 class Game(models.Model):
     id = models.AutoField(primary_key=True)
     home_team_id = models.ForeignKey(
-        "sport.Team", related_name='home_team', on_delete=models.CASCADE)
+        "sport.Team", related_name='home_team_id', on_delete=models.CASCADE)
     away_team_id = models.ForeignKey(
-        "sport.Team", related_name='away_team', on_delete=models.CASCADE)
+        "sport.Team", related_name='away_team_id', on_delete=models.CASCADE)
     season_id = models.ForeignKey(
         "sport.Season",  on_delete=models.CASCADE)
     date = models.DateField(null=True)
@@ -99,36 +94,38 @@ class PlayerManager(models.Model):
         ('Female', 'Female'),
         ('Prefer not to say', 'Prefer not to say'),
     ]
-    id = models.AutoField(primary_key=True)
-    user_id = models.OneToOneField(
-        "sport.User", on_delete=models.CASCADE, limit_choices_to={'UserType': 'Player'})
-    date_of_birth = models.DateTimeField()
-    gender = models.CharField(max_length=25, choices=GENDER)
-    salary = models.IntegerField(null=True)
-    jersey_no = models.IntegerField(null=True)
-    position = models.TextField(null=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-
-    def __str__(self):
-        return self.user_id.name
-
-
-class TeamPlayerManager(models.Model):
     ROLE = [
         ('Player', 'Player'),
         ('Manager', 'Manager'),
     ]
     id = models.AutoField(primary_key=True)
-    player_or_manager_id = models.ForeignKey(
-        "sport.PlayerManager", on_delete=models.CASCADE)
-    team_id = models.ForeignKey("sport.Team", on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    contact = models.CharField(max_length=255, null=True)
+    date_of_birth = models.DateTimeField()
+    gender = models.CharField(max_length=25, choices=GENDER)
+    salary = models.IntegerField(null=True)
+    jersey_no = models.IntegerField(null=True)
+    position = models.TextField(null=True)
     role = models.CharField(max_length=25, choices=ROLE)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return f"{self.player_or_manager_id.user_id.name}"
+        return f"{self.first_name} {self.last_name}"
+
+
+class TeamPlayerManager(models.Model):
+    id = models.AutoField(primary_key=True)
+    player_or_manager_id = models.ForeignKey(
+        "sport.PlayerManager", on_delete=models.CASCADE)
+    team_id = models.ForeignKey("sport.Team", on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return f"{self.player_or_manager_id.first_name} in {self.team_id}"
 
 
 class SeasonPlayerManager(models.Model):
@@ -139,7 +136,25 @@ class SeasonPlayerManager(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return f"{self.manager_id.user_id.name}"
+        return f"{self.manager_id.first_name}"
+
+
+class GamePlayerManager(models.Model):
+    EVENT = [
+        ('Goal', 'Goal'),
+        ('Yellow Card', 'Yellow Card'),
+        ('Read Card', 'Read Card'),
+    ]
+    id = models.AutoField(primary_key=True)
+    player_or_manager_id = models.ForeignKey(
+        "sport.PlayerManager", on_delete=models.CASCADE)
+    game_id = models.ForeignKey("sport.Game", on_delete=models.CASCADE)
+    event = models.CharField(max_length=25, choices=EVENT)
+    time = models.DateField(null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return f"{self.player_or_manager_id.first_name}"
 
 
 class Communication(models.Model):
