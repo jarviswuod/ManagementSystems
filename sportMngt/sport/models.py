@@ -14,53 +14,44 @@ class User(models.Model):
     phone = models.CharField(max_length=255, null=True)
     user_type = models.CharField(max_length=7, choices=USER_TYPES)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.name
 
 
 class League(models.Model):
-    created_by = models.ForeignKey(
-        "sport.User", related_name='created_by', on_delete=models.SET_NULL, null=True, blank=True)
-    id = models.AutoField()
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    founded = models.DateField()
-    country = models.CharField()
+    founded = models.DateField(null=True)
+    country = models.CharField(null=True)
+    number_of_teams = models.IntegerField(null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.name
 
 
 class Team(models.Model):
-    created_by = models.ForeignKey(
-        "sport.User", related_name='created_by', on_delete=models.SET_NULL, null=True, blank=True)
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     founded = models.DateField()
-    coach = models.CharField(max_length=255)
+    number_of_players = models.IntegerField()
     ground = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.name
 
 
 class Season(models.Model):
-    created_by = models.ForeignKey(
-        "sport.User", related_name='created_by', on_delete=models.SET_NULL, null=True, blank=True)
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)  # 2024/2025
     league_id = models.ForeignKey("sport.League", on_delete=models.CASCADE)
-    number = models.IntegerField()
+    number_of_teams = models.IntegerField()
     start_date = models.DateField()
     end_date = models.DateField()
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.name
@@ -68,37 +59,38 @@ class Season(models.Model):
 
 class Game(models.Model):
     id = models.AutoField(primary_key=True)
-    created_by = models.ForeignKey(
-        "sport.User", related_name='created_by', on_delete=models.SET_NULL, null=True, blank=True)
-    id = models.AutoField(primary_key=True)
     home_team_id = models.ForeignKey(
-        "sport.Team", related_name='team1', on_delete=models.CASCADE)
+        "sport.Team", related_name='home_team', on_delete=models.CASCADE)
     away_team_id = models.ForeignKey(
-        "sport.Team", related_name='team2', on_delete=models.CASCADE)
-    league_id = models.ForeignKey(
-        "sport.League", related_name='league', on_delete=models.CASCADE)
-    date = models.DateTimeField()
-    start_time = models.models.DateTimeField()
-    end_time = models.models.DateTimeField()
+        "sport.Team", related_name='away_team', on_delete=models.CASCADE)
+    season_id = models.ForeignKey(
+        "sport.Season",  on_delete=models.CASCADE)
+    date = models.DateField(null=True)
+    start_time = models.DateTimeField(null=True)
+    end_time = models.DateTimeField(null=True)
     location = models.CharField(max_length=255)
     home_team_score = models.IntegerField(null=True)
     away_team_score = models.IntegerField(null=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_played = models.BooleanField(null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return f"{self.home_team_id.name} vs {self.away_team_id.name}  {self.league_id.name} at {self.date}"
+        return f"{self.home_team_id.name} vs {self.away_team_id.name}  {self.season_id.name} at {self.start_time}"
 
 
 class TeamSeason(models.Model):
     id = models.AutoField(primary_key=True)
-    season_id = models.ForeignKey("sport.Season", null=True)
-    team_id = models.ForeignKey("sport.Team", null=True)
-    point = models.IntegerField(null=True)
+    season_id = models.ForeignKey(
+        "sport.Season", on_delete=models.SET_NULL, null=True)
+    team_id = models.ForeignKey(
+        "sport.Team", on_delete=models.SET_NULL, null=True)
+    points = models.IntegerField(null=True)
+    wins = models.IntegerField(null=True)
+    draws = models.IntegerField(null=True)
+    lost = models.IntegerField(null=True)
 
     def __str__(self):
-        return f"{self.team_id.name} vs {self.season_id.name} at {self.point}"
+        return f"{self.team_id.name} vs {self.season_id.name} at {self.points}"
 
 
 class PlayerManager(models.Model):
@@ -109,52 +101,53 @@ class PlayerManager(models.Model):
     ]
     id = models.AutoField(primary_key=True)
     user_id = models.OneToOneField(
-        "sport.User", on_delete=models.CASCADE, primary_key=True, limit_choices_to={'UserType': 'Player'})
-    date_of_birth = models.DateTime()
+        "sport.User", on_delete=models.CASCADE, limit_choices_to={'UserType': 'Player'})
+    date_of_birth = models.DateTimeField()
     gender = models.CharField(max_length=25, choices=GENDER)
     salary = models.IntegerField(null=True)
     jersey_no = models.IntegerField(null=True)
     position = models.TextField(null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.user_id.name
 
 
-class Team_PlayerManager(models.Model):
+class TeamPlayerManager(models.Model):
+    ROLE = [
+        ('Player', 'Player'),
+        ('Manager', 'Manager'),
+    ]
     id = models.AutoField(primary_key=True)
-    player_id = models.ForeignKey(
+    player_or_manager_id = models.ForeignKey(
         "sport.PlayerManager", on_delete=models.CASCADE)
     team_id = models.ForeignKey("sport.Team", on_delete=models.CASCADE)
+    role = models.CharField(max_length=25, choices=ROLE)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return f"{self.player_id.user_id.name}"
+        return f"{self.player_or_manager_id.user_id.name}"
 
 
-class Season_PlayerManager(models.Model):
+class SeasonPlayerManager(models.Model):
     id = models.AutoField(primary_key=True)
     manager_id = models.ForeignKey(
         "sport.PlayerManager", on_delete=models.CASCADE)
-    team_id = models.ForeignKey("sport.Team", on_delete=models.CASCADE)
-    start_date = models.DateField(null=True)
-    end_date = models.DateField(null=True)
+    season_id = models.ForeignKey("sport.Season", on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return f"{self.player_id.user_id.name}"
+        return f"{self.manager_id.user_id.name}"
 
 
 class Communication(models.Model):
-    writer = models.ForeignKey(
+    id = models.AutoField(primary_key=True)
+    writer_id = models.ForeignKey(
         "sport.User", related_name='writer', on_delete=models.CASCADE)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"From {self.writer} at {self.timestamp}"
+        return f"From {self.writer_id} at {self.timestamp}"

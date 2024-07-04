@@ -4,9 +4,12 @@ services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_DB: sport
-      POSTGRES_USER: jarvis
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB= sport
+      POSTGRES_USER= jarvis
+      POSTGRES_PASSWORD= password
+      # POSTGRES_DB: config('POSTGRES_DB')
+      # POSTGRES_USER: config('POSTGRES_USER')
+      # POSTGRES_PASSWORD: config('POSTGRES_PASSWORD')
     ports:
       - "5432:5432"
     volumes:
@@ -14,4 +17,5 @@ services:
 
 volumes:
   postgres_data:
+
 # Run docker stack deploy -c stack.yml postgres (or docker-compose -f stack.yml up), wait for it to initialize completely, and visit http://swarm-ip:8080, http://localhost:8080, or http://host-ip:8080 (as appropriate).

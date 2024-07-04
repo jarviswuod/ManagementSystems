@@ -1,12 +1,13 @@
 from django.contrib import admin
-from .models import User, Team, PlayerProfile, MatchEvent, Competition, Standings, Communication, Report, SystemAdmin
+from . import models
 # Register your models here.User
-admin.site.register(User)
-admin.site.register(Team)
-admin.site.register(PlayerProfile)
-admin.site.register(MatchEvent)
-admin.site.register(Competition)
-admin.site.register(Standings)
-admin.site.register(Communication)
-admin.site.register(Report)
-admin.site.register(SystemAdmin)
+admin.site.register(models.User)
+admin.site.register(models.League)
+admin.site.register(models.Team)
+admin.site.register(models.Season)
+admin.site.register(models.Game)
+admin.site.register(models.TeamSeason)
+admin.site.register(models.PlayerManager)
+admin.site.register(models.TeamPlayerManager)
+admin.site.register(models.SeasonPlayerManager)
+admin.site.register(models.Communication)
