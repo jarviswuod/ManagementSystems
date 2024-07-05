@@ -11,7 +11,7 @@ class User(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return self.name
+        return self.first_name
 
 
 class League(models.Model):
@@ -103,14 +103,12 @@ class PlayerManager(models.Model):
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     contact = models.CharField(max_length=255, null=True)
-    date_of_birth = models.DateTimeField()
+    date_of_birth = models.DateField()
     gender = models.CharField(max_length=25, choices=GENDER)
     salary = models.IntegerField(null=True)
     jersey_no = models.IntegerField(null=True)
     position = models.TextField(null=True)
     role = models.CharField(max_length=25, choices=ROLE)
-    start_date = models.DateField(null=True)
-    end_date = models.DateField(null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
@@ -150,7 +148,7 @@ class GamePlayerManager(models.Model):
         "sport.PlayerManager", on_delete=models.CASCADE)
     game_id = models.ForeignKey("sport.Game", on_delete=models.CASCADE)
     event = models.CharField(max_length=25, choices=EVENT)
-    time = models.DateField(null=True)
+    time = models.CharField(null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
