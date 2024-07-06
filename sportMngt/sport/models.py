@@ -143,8 +143,6 @@ class GamePlayerManager(models.Model):
         ('Substitute', 'Substitute'),
         ('Yellow Card', 'Yellow Card'),
         ('Read Card', 'Read Card'),
-
-
     ]
     id = models.AutoField(primary_key=True)
     player_or_manager_id = models.ForeignKey(
