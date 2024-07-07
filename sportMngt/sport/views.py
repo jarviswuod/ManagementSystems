@@ -12,6 +12,12 @@ class UserListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
 
 
+class UserRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = 'pk'
+
+
 class UserUpdateAPIView(generics.UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -36,6 +42,12 @@ class UserDestroyAPIView(generics.DestroyAPIView):
 class LeagueListCreateAPIView(generics.ListCreateAPIView):
     queryset = League.objects.all()
     serializer_class = LeagueSerializer
+
+
+class LeagueRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = League.objects.all()
+    serializer_class = LeagueSerializer
+    lookup_field = 'pk'
 
 
 class LeagueUpdateAPIView(generics.UpdateAPIView):
@@ -64,6 +76,12 @@ class TeamListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = TeamSerializer
 
 
+class TeamRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
+    lookup_field = 'pk'
+
+
 class TeamUpdateAPIView(generics.UpdateAPIView):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
@@ -90,6 +108,12 @@ class SeasonListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = SeasonSerializer
 
 
+class SeasonRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Season.objects.all()
+    serializer_class = SeasonSerializer
+    lookup_field = 'pk'
+
+
 class SeasonUpdateAPIView(generics.UpdateAPIView):
     queryset = Season.objects.all()
     serializer_class = SeasonSerializer
@@ -113,6 +137,12 @@ class SeasonDestroyAPIView(generics.DestroyAPIView):
 class GameListCreateAPIView(generics.ListCreateAPIView):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+
+
+class GameRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
+    lookup_field = 'pk'
 
 
 class GameUpdateAPIView(generics.UpdateAPIView):
@@ -141,6 +171,12 @@ class TeamSeasonListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = TeamSeasonSerializer
 
 
+class TeamSeasonRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = TeamSeason.objects.all()
+    serializer_class = TeamSeasonSerializer
+    lookup_field = 'pk'
+
+
 class TeamSeasonUpdateAPIView(generics.UpdateAPIView):
     queryset = TeamSeason.objects.all()
     serializer_class = TeamSeasonSerializer
@@ -165,6 +201,12 @@ class TeamSeasonDestroyAPIView(generics.DestroyAPIView):
 class PlayerManagerListCreateAPIView(generics.ListCreateAPIView):
     queryset = PlayerManager.objects.all()
     serializer_class = PlayerManagerSerializer
+
+
+class PlayerManagerRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = PlayerManager.objects.all()
+    serializer_class = PlayerManagerSerializer
+    lookup_field = 'pk'
 
 
 class PlayerManagerUpdateAPIView(generics.UpdateAPIView):
@@ -193,6 +235,12 @@ class TeamPlayerManagerListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = TeamPlayerManagerSerializer
 
 
+class TeamPlayerManagerRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = TeamPlayerManager.objects.all()
+    serializer_class = TeamPlayerManagerSerializer
+    lookup_field = 'pk'
+
+
 class TeamPlayerManagerUpdateAPIView(generics.UpdateAPIView):
     queryset = TeamPlayerManager.objects.all()
     serializer_class = TeamPlayerManagerSerializer
@@ -217,6 +265,12 @@ class TeamPlayerManagerDestroyAPIView(generics.DestroyAPIView):
 class SeasonPlayerManagerListCreateAPIView(generics.ListCreateAPIView):
     queryset = SeasonPlayerManager.objects.all()
     serializer_class = SeasonPlayerManagerSerializer
+
+
+class SeasonPlayerManagerRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = SeasonPlayerManager.objects.all()
+    serializer_class = SeasonPlayerManagerSerializer
+    lookup_field = 'pk'
 
 
 class SeasonPlayerManagerUpdateAPIView(generics.UpdateAPIView):
@@ -245,6 +299,12 @@ class GamePlayerManagerListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = GamePlayerManagerSerializer
 
 
+class GamePlayerManagerRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = GamePlayerManager.objects.all()
+    serializer_class = GamePlayerManagerSerializer
+    lookup_field = 'pk'
+
+
 class GamePlayerManagerUpdateAPIView(generics.UpdateAPIView):
     queryset = GamePlayerManager.objects.all()
     serializer_class = GamePlayerManagerSerializer
@@ -269,6 +329,12 @@ class GamePlayerManagerDestroyAPIView(generics.DestroyAPIView):
 class CommunicationListCreateAPIView(generics.ListCreateAPIView):
     queryset = Communication.objects.all()
     serializer_class = CommunicationSerializer
+
+
+class CommunicationRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Communication.objects.all()
+    serializer_class = CommunicationSerializer
+    lookup_field = 'pk'
 
 
 class CommunicationUpdateAPIView(generics.UpdateAPIView):

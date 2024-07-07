@@ -88,6 +88,8 @@ class GamePlayerManagerSerializer(serializers.ModelSerializer):
 
 
 class CommunicationSerializer(serializers.ModelSerializer):
+    writer_id = UserSerializer()
+
     class Meta:
         model = Communication
         fields = '__all__'
