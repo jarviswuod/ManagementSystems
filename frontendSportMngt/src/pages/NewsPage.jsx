@@ -6,7 +6,6 @@ const NewsPage = () => {
 
   function timeAgo(timestamp) {
     const date = new Date(timestamp);
-
     return formatDistanceToNow(date, { addSuffix: true });
   }
 
@@ -18,7 +17,7 @@ const NewsPage = () => {
           <div key={singlenews.id}>
             <div>{singlenews.content}</div>
             <div>{timeAgo(singlenews.timestamp)}</div>
-            <div>{singlenews.writer_id}</div>
+            <div>{singlenews.writer_id.first_name}</div>
           </div>
         ))}
       </div>
