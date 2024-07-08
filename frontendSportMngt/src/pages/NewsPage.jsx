@@ -10,14 +10,24 @@ const NewsPage = () => {
   }
 
   return (
-    <section>
+    <section className="flex items-center justify-center">
       <div>
-        <h2>News</h2>
         {news.map((singlenews) => (
-          <div key={singlenews.id}>
-            <div>{singlenews.content}</div>
-            <div>{timeAgo(singlenews.timestamp)}</div>
-            <div>{singlenews.writer_id.first_name}</div>
+          <div
+            key={singlenews.id}
+            className="max-w-xl p-6 bg-white  rounded-lg dark:bg-gray-800 dark:border-gray-700"
+          >
+            <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+              {singlenews.headline}
+            </h5>
+
+            <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
+              {singlenews.content}
+            </p>
+            <p className="inline-flex font-medium items-center text-gray-500 dark:text-gray-400 mb-3">
+              {singlenews.writer_id.first_name} ({timeAgo(singlenews.timestamp)}
+              )
+            </p>
           </div>
         ))}
       </div>

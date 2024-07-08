@@ -11,7 +11,6 @@ import { useLoaderData } from "react-router-dom";
 
 const Standing = () => {
   const tableData = useLoaderData();
-  console.log(tableData);
 
   return (
     <section>

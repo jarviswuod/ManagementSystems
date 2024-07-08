@@ -10,15 +10,11 @@ const GamesPage = () => {
   return (
     <section>
       <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-center rtl:text-center text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Date
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className="w-full text-sm text-center rtl:text-center text-gray-500 dark:text-gray-400">
+          <div className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <p>Date</p>
+          </div>
+          <div>
             {games.map((game) => (
               <div
                 key={game.id}
@@ -31,7 +27,7 @@ const GamesPage = () => {
                     <Avatar>
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>
-                        {game.home_team_id.name.slice(0, 3)}
+                        {game.home_team_id?.name.slice(0, 3).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                   </div>
@@ -50,7 +46,7 @@ const GamesPage = () => {
                     <Avatar>
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>
-                        {game.away_team_id.name.slice(0, 3)}
+                        {game.away_team_id?.name.slice(0, 3).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     {game.away_team_id.name}
@@ -58,8 +54,8 @@ const GamesPage = () => {
                 </div>
               </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </section>
   );
