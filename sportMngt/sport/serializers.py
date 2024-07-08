@@ -35,9 +35,9 @@ class SeasonSerializer(serializers.ModelSerializer):
 
 
 class GameSerializer(serializers.ModelSerializer):
-    # home_team_id = TeamSerializer()
-    # away_team_id = TeamSerializer()
-    # season_id = SeasonSerializer()
+    home_team_id = TeamSerializer()
+    away_team_id = TeamSerializer()
+    season_id = SeasonSerializer()
 
     class Meta:
         model = Game
@@ -45,8 +45,8 @@ class GameSerializer(serializers.ModelSerializer):
 
 
 class TeamSeasonSerializer(serializers.ModelSerializer):
-    # season_id = SeasonSerializer()
-    # team_id = TeamSerializer()
+    season_id = SeasonSerializer()
+    team_id = TeamSerializer()
 
     class Meta:
         model = TeamSeason

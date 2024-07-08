@@ -83,9 +83,10 @@ class TeamSeason(models.Model):
     wins = models.IntegerField(null=True)
     draws = models.IntegerField(null=True)
     lost = models.IntegerField(null=True)
+    games_played = models.IntegerField(default=0, null=True)
 
     def __str__(self):
-        return f"{self.team_id.name} vs {self.season_id.name} at {self.points}"
+        return f"{self.team_id.name} in {self.season_id.name} at {self.points}"
 
 
 class PlayerManager(models.Model):

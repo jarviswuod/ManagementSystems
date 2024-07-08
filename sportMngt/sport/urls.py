@@ -23,6 +23,12 @@ urlpatterns = [
     path('season/<int:pk>/update/', views.SeasonUpdateAPIView.as_view()),
     path('season/<int:pk>/delete/', views.SeasonDestroyAPIView.as_view()),
 
+    path('game/', views.GameListCreateAPIView.as_view()),
+    path('game/<int:pk>/', views.GameRetrieveAPIView.as_view()),
+    path('game/<int:pk>/update/', views.GameUpdateAPIView.as_view()),
+    path('game/<int:pk>/delete/', views.GameDestroyAPIView.as_view()),
+
+
     path('teamseason/', views.TeamSeasonListCreateAPIView.as_view()),
     path('teamseason/<int:pk>/', views.TeamSeasonRetrieveAPIView.as_view()),
     path('teamseason/<int:pk>/update/', views.TeamSeasonUpdateAPIView.as_view()),

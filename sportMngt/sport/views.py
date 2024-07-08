@@ -135,7 +135,7 @@ class SeasonDestroyAPIView(generics.DestroyAPIView):
 
 
 class GameListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Game.objects.all()
+    queryset = Game.objects.all().order_by('-date')
     serializer_class = GameSerializer
 
 
@@ -167,7 +167,7 @@ class GameDestroyAPIView(generics.DestroyAPIView):
 
 
 class TeamSeasonListCreateAPIView(generics.ListCreateAPIView):
-    queryset = TeamSeason.objects.all()
+    queryset = TeamSeason.objects.all().order_by('-points')
     serializer_class = TeamSeasonSerializer
 
 
