@@ -161,6 +161,7 @@ class Communication(models.Model):
     id = models.AutoField(primary_key=True)
     writer_id = models.ForeignKey(
         "sport.User", related_name='writer', on_delete=models.CASCADE)
+    headline = models.CharField(null=True, default="New updates")
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 

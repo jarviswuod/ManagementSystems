@@ -327,7 +327,7 @@ class GamePlayerManagerDestroyAPIView(generics.DestroyAPIView):
 
 
 class CommunicationListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Communication.objects.all()
+    queryset = Communication.objects.all().order_by('-timestamp')
     serializer_class = CommunicationSerializer
 
 
