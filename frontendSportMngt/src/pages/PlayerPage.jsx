@@ -1,6 +1,5 @@
 import { Link, useLoaderData, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-
+import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,15 +14,46 @@ import {
 
 const PlayerPage = () => {
   const { id } = useParams();
-  const playerInfor = useLoaderData();
+  const playerInfo = useLoaderData();
+
+  const [firstName, setFirstName] = useState(playerInfo.first_name);
+  const [lastName, setLastName] = useState(playerInfo.last_name);
+  const [email, setEmail] = useState(playerInfo.email);
+  const [contact, setContact] = useState(playerInfo.contact);
+  const [dateOfBirth, setDateOfBirth] = useState(playerInfo.date_of_birth);
+  const [gender, setGender] = useState(playerInfo.gender);
+  const [salary, setSalary] = useState(playerInfo.salary);
+  const [jerseyNo, setJerseyNo] = useState(playerInfo.jersey_no);
+  const [position, setPosition] = useState(playerInfo.position);
+  const [role, setRole] = useState(playerInfo.role);
+
+  const submitForm = (e) => {
+    e.preventDefault();
+
+    const updatedPlayer = {
+      id,
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      contact,
+      date_of_birth: dateOfBirth,
+      gender,
+      salary,
+      jersey_no: jerseyNo,
+      position,
+      role,
+    };
+
+    console.log(updatedPlayer);
+  };
 
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="max-w-2xl px-4 py-8 mx-auto lg:py-16">
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-          Update {playerInfor.role}
+          Update {role}
         </h2>
-        <form action="#">
+        <form onSubmit={submitForm}>
           <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
             <div className="w-full">
               <label
@@ -37,9 +67,10 @@ const PlayerPage = () => {
                 name="first_name"
                 id="first_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={`${playerInfor.first_name}`}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 placeholder="First Name"
-                required=""
+                required
               />
             </div>
 
@@ -55,9 +86,10 @@ const PlayerPage = () => {
                 name="last_name"
                 id="last_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={`${playerInfor.last_name}`}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 placeholder="Last Name"
-                required=""
+                required
               />
             </div>
 
@@ -73,9 +105,10 @@ const PlayerPage = () => {
                 name="email"
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={`${playerInfor.email}`}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="john@doe.com"
-                required=""
+                required
               />
             </div>
             <div className="sm:col-span-2">
@@ -90,9 +123,9 @@ const PlayerPage = () => {
                 name="contact"
                 id="contact"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={`${playerInfor.contact}`}
-                placeholder="john@doe.com"
-                required=""
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+                required
               />
             </div>
             <div className="sm:col-span-2">
@@ -107,9 +140,10 @@ const PlayerPage = () => {
                 name="date_of_birth"
                 id="date_of_birth"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={`${playerInfor.date_of_birth}`}
+                value={dateOfBirth}
+                onChange={(e) => setDateOfBirth(e.target.value)}
                 placeholder="john@doe.com"
-                required=""
+                required
               />
             </div>
 
@@ -123,30 +157,14 @@ const PlayerPage = () => {
               <select
                 id="gender"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
               >
-                <option selected="">Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Prefer not to say">Prefer not to say</option>
               </select>
-            </div>
-
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="contact"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Contact
-              </label>
-              <input
-                type="text"
-                name="contact"
-                id="contact"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={`${playerInfor.contact}`}
-                placeholder="john@doe.com"
-                required=""
-              />
             </div>
 
             <div className="sm:col-span-2">
@@ -159,8 +177,10 @@ const PlayerPage = () => {
               <select
                 id="role"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
               >
-                <option selected="">Role</option>
                 <option value="Player">Player</option>
                 <option value="Manager">Coach</option>
               </select>
@@ -178,9 +198,9 @@ const PlayerPage = () => {
                 name="salary"
                 id="salary"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={`${playerInfor.salary}`}
-                placeholder="$20000"
-                required=""
+                value={salary}
+                onChange={(e) => setSalary(e.target.value)}
+                required
               />
             </div>
 
@@ -196,7 +216,9 @@ const PlayerPage = () => {
                 name="jersey_no"
                 id="jersey_no"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={`${playerInfor.jersey_no}`}
+                required
+                value={jerseyNo}
+                onChange={(e) => setJerseyNo(e.target.value)}
                 placeholder="11"
               />
             </div>
@@ -212,7 +234,9 @@ const PlayerPage = () => {
                 name="position"
                 id="position"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={`${playerInfor.position}`}
+                required
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
                 placeholder="4, 5"
               />
             </div>
@@ -222,12 +246,9 @@ const PlayerPage = () => {
               type="submit"
               className="text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
-              Update {playerInfor.role}
+              Update {playerInfo.role}
             </button>
-            <button
-              type="button"
-              className="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
-            >
+            <div className="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
               <svg
                 className="w-5 h-5 mr-1 -ml-1"
                 fill="currentColor"
@@ -235,9 +256,9 @@ const PlayerPage = () => {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
 
@@ -250,7 +271,7 @@ const PlayerPage = () => {
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                       This action cannot be undone. This will permanently delete{" "}
-                      {playerInfor.first_name} remove data from the servers.
+                      {playerInfo.first_name} remove data from the servers.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -259,7 +280,7 @@ const PlayerPage = () => {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
-            </button>
+            </div>
           </div>
         </form>
       </div>
