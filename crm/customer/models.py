@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Customer(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
-    phone = PhoneNumberField(null=True, blank=True)
+    phone = models.IntegerField(null=True, blank=True)
     email = models.EmailField(max_length=254, unique=True)
-    profile_pic = models.ImageField(null=True, blank=True)
+    profile_pic = models.ImageField(
+        default="profile_3.jpg", null=True, blank=True)
     user = models.OneToOneField(User, null=True, blank=True,
                                 on_delete=models.CASCADE, related_name='customer_profile')
 
