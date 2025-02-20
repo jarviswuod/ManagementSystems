@@ -47,4 +47,4 @@ class Order(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"Order {self.id} - {self.status}"
+        return f"{self.product} - {self.status}"
