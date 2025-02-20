@@ -7,7 +7,9 @@
     <title>Dummy web app</title>
   </head>
   <body>
-    <p><span> Hey {{request.user.username}}</span> <a href="">Logout</a></p>
+    <p>
+      <span> Hey {{request.user.username}}</span> <a href="/logout">Logout</a>
+    </p>
     <h1>{% block title %} {% endblock title %}</h1>
 
     {%block content%} {% endblock content %}
