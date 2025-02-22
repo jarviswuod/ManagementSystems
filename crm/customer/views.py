@@ -61,12 +61,11 @@ def products(request):
     return HttpResponse("This is products")
 
 
+@login_required(login_url='login')
 def customer(request):
     user = request.user
-    print(user)
-    # customer = Customer.objects.get(user=user)
-    # print(customer)
-    orders = Order.objects.get(customer=user)
+    customer = Customer.objects.get(user=user)
+    orders = customer.orders.all()
     print(orders)
 
     form = {"orders": orders}
